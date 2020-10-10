@@ -1,5 +1,5 @@
 {
-    "name": "CodeAndCommits/patch-apply",
+    "name": "code-and-commits/patch-apply",
     "description": "Generate and apply diffs to strings",
     "type": "library",
     "license": "ISC",

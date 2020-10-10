@@ -5,28 +5,6 @@ on:
   - pull_request
 
 jobs:
-  type-checking:
-    name: Type Checking
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-          extensions: json
-          tools: composer
-
-      - name: Install Dependencies
-        run: composer install
-
-      - name: PHPStan
-        run: ./vendor/bin/phpstan analyse
-
   unit-tests:
     name: Unit Tests
 
