@@ -33,24 +33,27 @@ class PatcherTest extends TestCase
         $this->assertEquals($expected, $output);
     }
 
+    /**
+     * @return string[][]
+     */
     public function patchProvider(): array
     {
         return [
             [
                 "abc",
-                <<<EOF
+                <<<PATCH
                 --- a	2020-10-10 15:11:50.720235698 +0100
                 +++ b	2020-10-10 15:12:02.414511742 +0100
                 @@ -1 +1 @@
                 -abc
                 +xyz
                 
-                EOF,
+                PATCH,
                 "xyz",
             ],
             [
                 "abc\ndef",
-                <<<EOF
+                <<<PATCH
                 --- a	2020-10-10 14:26:30.381951580 +0100
                 +++ b	2020-10-10 14:26:42.361963579 +0100
                 @@ -1,2 +1,2 @@
@@ -58,7 +61,7 @@ class PatcherTest extends TestCase
                 -def
                 +xyz
                 
-                EOF,
+                PATCH,
                 "abc\nxyz",
             ],
             [
