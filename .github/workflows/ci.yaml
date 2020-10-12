@@ -44,3 +44,69 @@ jobs:
 
       - name: PHPUnit
         run: ./vendor/bin/phpunit
+
+  backwards-compatility:
+    name: Backwards Compatibility
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Fetch tags
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: json
+          tools: composer
+
+      - name: Check Backwards Compatibility
+        uses: docker://nyholm/roave-bc-check-ga
+
+  type-checking:
+    name: Type Checking
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: json
+          tools: composer
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: PHPStan
+        run: ./vendor/bin/phpstan analyse
+
+  coding-style:
+    name: Coding Style
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: json
+          tools: composer
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: PHP-CS-Fixer
+        run: ./vendor/bin/php-cs-fixer fix --diff-format=udiff --dry-run --using-cache=no --verbose
